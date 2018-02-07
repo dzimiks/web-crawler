@@ -3,10 +3,14 @@ from queue import Queue
 from spider import Spider
 from domain import *
 from general import *
+from scanners.ip_address import *
+from scanners.robots_txt import *
+# from scanners.nmap import *
+# from scanners.whois import *
 
 
 PROJECT_NAME = 'dzimiks'
-HOMEPAGE = 'https://github.com/dzimiks/web-crawler'
+HOMEPAGE = 'https://github.com/'
 DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
@@ -50,5 +54,22 @@ def crawl():
         create_jobs()
 
 
+def gather_info(name, url):
+    domain_name = get_domain_name(url)
+    ip_address = get_ip_address(domain_name)
+    robots_txt = get_robots_txt(url)
+    create_report(name, url, domain_name, ip_address, robots_txt)
+
+
+def create_report(name, full_url, domain_name, ip_address, robots_txt):
+    project_dir = PROJECT_NAME + '/' + name
+    create_project_dir(project_dir)
+    write_file(project_dir + '/full_url.txt', full_url)
+    write_file(project_dir + '/domain_name.txt', domain_name)
+    write_file(project_dir + '/robots_txt.txt', robots_txt)
+    write_file(project_dir + '/ip_address.txt', ip_address)
+
+
+gather_info('data', HOMEPAGE)
 create_workers()
 crawl()
