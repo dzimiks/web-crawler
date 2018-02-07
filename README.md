@@ -1,2 +1,2 @@
 # web-crawler
-Python website crawler.
+Simple python website crawler.
