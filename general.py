@@ -1,4 +1,5 @@
 import os
+import json
 
 
 # Each website you crawl is a separate project (folder)
@@ -54,3 +55,11 @@ def set_to_file(links, file_name):
     with open(file_name, "w") as f:
         for link in sorted(links):
             f.write(link + "\n")
+
+
+# Read json file
+def read_json(file_name):
+    with open(file_name, 'r') as f:
+        data = json.load(f)
+
+    return data
